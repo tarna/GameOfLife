@@ -55,17 +55,20 @@ if ($amount > 0) {
     <title>GOL Admin</title>
 
     <script>
-        function banUser(userId) {
-            if (confirm("Are you sure you want to ban this user?")) {
-                // Implement ban logic here
-                alert("User " + userId + " has been banned.");
-            }
-        }
-
         function deleteUser(userId) {
             if (confirm("Are you sure you want to delete this user?")) {
-                // Implement delete logic here
-                alert("User " + userId + " has been deleted.");
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = 'delete_user.php';
+
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'id';
+                input.value = userId;
+
+                form.appendChild(input);
+                document.body.appendChild(form);
+                form.submit();
             }
         }
 
