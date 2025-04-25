@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Conway’s Game of Life</title>
+  <link rel="stylesheet" href="loginStyle.css">
+</head>
+<body>
+
+  <h1>Conway’s Game of Life</h1>
+
+  <div class="login-box">
+    <h3>Login</h3>
+
+    <div id="idError" class="error"></div>
+    <label for="idInput">Name:</label>
+    <input type="text" id="idInput">
+
+    <div id="emailError" class="error"></div>
+    <label for="emailInput">Email:</label>
+    <input type="text" id="emailInput">
+
+    <div id="passError" class="error"></div>
+    <label for="passInput">Password:</label>
+    <input type="text" id="passInput">
+
+    <br><br>
+    <button onclick="validate()">Add</button>
+  </div>
+
+  <div id="outputBox"></div>
+
+  <script>
+    function validate() {
+      const id = document.getElementById("idInput").value.trim();
+      const email = document.getElementById("emailInput").value.trim();
+      const pass = document.getElementById("passInput").value.trim();
+
+      let errors = [];
+
+      // Clear previous inline messages
+      document.getElementById("idError").innerHTML = "";
+      document.getElementById("emailError").innerHTML = "";
+      document.getElementById("passError").innerHTML = "";
+
+      if (id === "") {
+        errors.push("Name is required.");
+        document.getElementById("idError").innerHTML = "Please enter your name.";
+      }
+      if (email === "") {
+        errors.push("Email is required.");
+        document.getElementById("emailError").innerHTML = "Please enter your email.";
+      }
+      if (pass === "") {
+        errors.push("Password is required.");
+        document.getElementById("passError").innerHTML = "Please enter your password.";
+      }
+
+      if (errors.length > 0) {
+        for (let i = 0; i < errors.length; i++) {
+          alert(errors[i]);
+        }
+        document.getElementById("outputBox").innerHTML = "";
+      } else {
+        document.getElementById("outputBox").innerHTML =
+          `<p>ID: ${id}</p><p>Email: ${email}</p><p>Password: ${pass}</p>`;
+
+        document.getElementById("idInput").value = "";
+        document.getElementById("emailInput").value = "";
+        document.getElementById("passInput").value = "";
+      }
+    }
+  </script>
+
+</body>
+</html>
