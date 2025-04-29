@@ -1,26 +1,14 @@
 <?php
-require 'config.php';
+require 'database.php';
 
-$host = $config['host'];
-$user = $config['user'];
-$pass = $config['pass'];
-$dbname = $config['dbname'];
-
-// Create connection
-$conn = new mysqli($host, $user, $pass, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    echo "Could not connect to server\n";
-    die("Connection failed: " . $conn->connect_error);
-}
+$conn = connectToDatabase();
 
 // SQL to create table
 $sql = "CREATE TABLE IF NOT EXISTS USERS (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(30) NOT NULL,
     email VARCHAR(50) NOT NULL,
-    password VARCHAR(50) NOT NULL
+    password VARCHAR(100) NOT NULL
 )";
 
 if ($conn->query($sql) === TRUE) {

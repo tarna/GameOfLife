@@ -1,18 +1,8 @@
 <?php
-require 'config.php';
-
-$host = $config['host'];
-$user = $config['user'];
-$pass = $config['pass'];
-$dbname = $config['dbname'];
+require 'database.php';
 
 // Create connection
-$conn = new mysqli($host, $user, $pass, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+$conn = connectToDatabase();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = intval($_POST['id']);
