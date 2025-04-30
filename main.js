@@ -198,7 +198,7 @@ document.getElementById('patternButton').addEventListener('change', function () 
 document.getElementById('resizeCanvasButton').addEventListener('click', function () {
     generationCount = 0;
     document.getElementById('generationCount').textContent = generationCount;
-    
+
     const newWidth = parseInt(document.getElementById('canvasWidth').value);
     const newHeight = parseInt(document.getElementById('canvasHeight').value);
 
@@ -245,6 +245,9 @@ function createBlankGrid(){
 //Insert a pattern
 function insertPattern(patternName){
     grid = createBlankGrid();
+
+    generationCount = 0;
+    document.getElementById('generationCount').textContent = generationCount;
 
     let pattern = [];
 
