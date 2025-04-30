@@ -1,6 +1,6 @@
 //Initialize canvas and context
 const canvas = document.getElementById('gameCanvas');
-const ctx = canvas.getContext('2d');
+const context = canvas.getContext('2d');
 
 //Cell size and initialize dimensions
 const cellSize = 10;
@@ -21,7 +21,7 @@ function calculateDimensions() {
 
 calculateDimensions();
 
-//Function to create the grid with random cells
+//Create the grid with random cells
 function createGrid(){
     const grid = [];
     for(let i = 0; i < numRows; i++){
@@ -39,31 +39,31 @@ let animationId = null;
 
 //Draw the grid with grid lines
 function drawGrid(){
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    context.clearRect(0, 0, canvas.width, canvas.height);
     //Cells
     for(let i = 0; i < numRows; i++){
         for(let j = 0; j < numCols; j++){
             if(grid[i][j] === 1){
-                ctx.fillStyle = 'black';
-                ctx.fillRect(j * cellSize, i * cellSize, cellSize, cellSize);
+                context.fillStyle = 'black';
+                context.fillRect(j * cellSize, i * cellSize, cellSize, cellSize);
             }
         }
     }
 
     //Grid lines
-    ctx.strokeStyle = '#ccc';
-    ctx.lineWidth = 0.5;
+    context.strokeStyle = '#ccc';
+    context.lineWidth = 0.5;
     for (let i = 0; i <= numRows; i++) {
-        ctx.beginPath();
-        ctx.moveTo(0, i * cellSize);
-        ctx.lineTo(canvas.width, i * cellSize);
-        ctx.stroke();
+        context.beginPath();
+        context.moveTo(0, i * cellSize);
+        context.lineTo(canvas.width, i * cellSize);
+        context.stroke();
     }
-    for (let j = 0; j <= numCols; j++) {
-        ctx.beginPath();
-        ctx.moveTo(j * cellSize, 0);
-        ctx.lineTo(j * cellSize, canvas.height);
-        ctx.stroke();
+    for (let i = 0; i <= numCols; i++) {
+        context.beginPath();
+        context.moveTo(j * cellSize, 0);
+        context.lineTo(j * cellSize, canvas.height);
+        context.stroke();
     }
 }
 
@@ -95,11 +95,11 @@ function countNeighbors(row, col){
     let count = 0;
     for(let i = -1; i <= 1; i++){
         for(let j = -1; j <= 1; j++){
-            const r = row + i;
-            const c = col + j;
+            const neighborR = row + i;
+            const neighborC = col + j;
             //Edge cases
-            if(r >= 0 && r < numRows && c >= 0 && c < numCols && !(i === 0 && j === 0)){
-                count += grid[r][c];
+            if(neighborR >= 0 && neighborR < numRows && neighborC >= 0 && neighborC < numCols && !(i === 0 && j === 0)){
+                count += grid[neighborR][neighborC];
             }
         }
     }
@@ -199,8 +199,9 @@ document.getElementById('resizeCanvasButton').addEventListener('click', function
     generationCount = 0;
     document.getElementById('generationCount').textContent = generationCount;
 
-    const newWidth = parseInt(document.getElementById('canvasWidth').value);
-    const newHeight = parseInt(document.getElementById('canvasHeight').value);
+    //Multiply by 10 to get pixel size to match cell size
+    const newWidth = parseInt(document.getElementById('canvasWidth').value) * 10;
+    const newHeight = parseInt(document.getElementById('canvasHeight').value) * 10;
 
     if (!isNaN(newWidth) && !isNaN(newHeight)) {
         const oldGrid = grid;
