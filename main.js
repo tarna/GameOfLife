@@ -10,6 +10,9 @@ let numCols = Math.floor(canvas.width / cellSize);
 //Animation speed
 const animationSpeed = 250; //milliseconds
 
+let generationCount = 0;
+
+
 //Calculate grid dimensions
 function calculateDimensions() {
     numRows = Math.floor(canvas.height / cellSize);
@@ -82,6 +85,9 @@ function updateGrid(){
         }
     }
     grid = newGrid;
+    //Update generation
+    generationCount++;
+    document.getElementById('generationCount').textContent = generationCount;
 }
 
 //Count live neighbors
@@ -151,6 +157,8 @@ document.getElementById('restartButton').addEventListener('click', function () {
     cancelAnimationFrame(animationId);
     grid = createGrid();
     drawGrid();
+    generationCount = 0;
+    document.getElementById('generationCount').textContent = generationCount;
 });
 
 //Plus one generation
@@ -188,6 +196,9 @@ document.getElementById('patternButton').addEventListener('change', function () 
 
 //Resize canvas
 document.getElementById('resizeCanvasButton').addEventListener('click', function () {
+    generationCount = 0;
+    document.getElementById('generationCount').textContent = generationCount;
+    
     const newWidth = parseInt(document.getElementById('canvasWidth').value);
     const newHeight = parseInt(document.getElementById('canvasHeight').value);
 

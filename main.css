@@ -1,3 +1,38 @@
-canvas {
-  border: 1px solid black;
-} 
+body{
+  background-color: #cce0f5;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100vh;
+  padding-top: 50px;
+  margin: 0;
+}
+
+canvas{
+  border: 1px solid rgb(0, 0, 0);
+  background-color: #ffffff;
+  box-shadow: 5px 5px 2px rgb(91, 91, 91);} 
+
+h1{
+  font-size: 45px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+h2{
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width:500px;
+}
+
+.buttons{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}

@@ -9,31 +9,43 @@
 </head>
 
 <body>
+    <h1>Conway's Game of Life</h1>
     <canvas id="gameCanvas" width="600" height="400"></canvas>
     <br>
     <br>
-    <button id="startButton">Start</button>
-    <button id="stopButton">Stop</button>
+    <div id="labels">
+    <h2>
+        <div id="user">User Name: <span id="userName">[USERNAME]</span></div>
+        <div id="generation">Generation: <span id="generationCount">0</span></div>
+    </h2>   
+</div>
+    <div id="buttons">
+        <button id="startButton">Start</button>
+        <button id="stopButton">Stop</button>
 
-    <button id="plusOneButton">+1 Generation</button>
-    <button id="plusManyButton">+23 Generation</button>
-    Load Pattern: 
-    <select name="patternButton" id="patternButton">
-        <option value="beehive">Beehive</option>
-        <option value="blinker">Blinker</option>
-        <option value="beacon">Beacon</option>
-        <option value="glider">Glider</option>
-    </select>
-    <button id="restartButton">Restart</button>
+        <button id="plusOneButton">+1 Generation</button>
+        <button id="plusManyButton">+23 Generation</button>
+        Load Pattern: 
+        <select name="patternButton" id="patternButton">
+            <option value="beehive">Beehive</option>
+            <option value="blinker">Blinker</option>
+            <option value="beacon">Beacon</option>
+            <option value="glider">Glider</option>
+        </select>
+        <button id="restartButton">Restart</button>
 
-    <br><br>
-    <label for="canvasWidth">Canvas Width:</label>
-    <input type="number" id="canvasWidth" value="600" min="100">
+        <br><br>
+        <label for="canvasWidth">Canvas Width:</label>
+        <input type="number" id="canvasWidth" value="600" min="100">
 
-    <label for="canvasHeight">Canvas Height:</label>
-    <input type="number" id="canvasHeight" value="400" min="100">
+        <label for="canvasHeight">Canvas Height:</label>
+        <input type="number" id="canvasHeight" value="400" min="100">
 
-    <button id="resizeCanvasButton">Resize Canvas</button>
+        <button id="resizeCanvasButton">Resize Canvas</button>
+    </div>
+
+    
+
 </body>
 
 </html>
