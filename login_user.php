@@ -24,11 +24,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
         $user = $result->fetch_assoc();
         if (password_verify($password, $user['password'])) {
             // Set cookies and log in
+            setcookie("id", $user['id'], time() + (86400 * 30), "/");
             setcookie("name", $user['name'], time() + (86400 * 30), "/");
             setcookie("email", $user['email'], time() + (86400 * 30), "/");
             echo "Login successful!";
 
-            header("Location: main.html");
+            header("Location: main.php");
         } else {
             echo "Incorrect password.";
         }
@@ -39,11 +40,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
         $stmt->bind_param("sss", $name, $email, $hashedPassword);
 
         if ($stmt->execute()) {
+            setcookie("id", $stmt->insert_id, time() + (86400 * 30), "/");
             setcookie("name", $name, time() + (86400 * 30), "/");
             setcookie("email", $email, time() + (86400 * 30), "/");
             echo "Account created and logged in successfully!";
 
-            header("Location: main.html");
+            header("Location: main.php");
         } else {
             echo "Error creating account.";
         }

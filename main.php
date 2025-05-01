@@ -42,9 +42,15 @@
         <input type="number" id="canvasHeight" value="40" min="1">
 
         <button id="resizeCanvasButton">Resize Canvas</button>
-    </div>
 
-    
+        <?php
+            require 'database.php';
+            $user = getUser();
+            if ($user['role'] === 'admin') {
+                echo '<button id="adminButton">Admin Panel</button>';
+            }
+        ?>
+    </div>
 
 </body>
 

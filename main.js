@@ -12,7 +12,6 @@ const animationSpeed = 250; //milliseconds
 
 let generationCount = 0;
 
-
 //Calculate grid dimensions
 function calculateDimensions() {
     numRows = Math.floor(canvas.height / cellSize);
@@ -61,8 +60,8 @@ function drawGrid(){
     }
     for (let i = 0; i <= numCols; i++) {
         context.beginPath();
-        context.moveTo(j * cellSize, 0);
-        context.lineTo(j * cellSize, canvas.height);
+        context.moveTo(i * cellSize, 0);
+        context.lineTo(i * cellSize, canvas.height);
         context.stroke();
     }
 }
@@ -87,6 +86,7 @@ function updateGrid(){
     grid = newGrid;
     //Update generation
     generationCount++;
+    updateGenerations(generationCount);
     document.getElementById('generationCount').textContent = generationCount;
 }
 
@@ -294,3 +294,86 @@ function insertPattern(patternName){
 
     drawGrid();
 }
+
+document.getElementById('adminButton')?.addEventListener('click', function() {
+    window.location.href = 'admin.php';
+});
+
+function setCookie(name, value, days) {
+    const date = new Date();
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+    const expires = "expires=" + date.toUTCString();
+    document.cookie = name + "=" + value + ";" + expires + ";path=/";
+}
+
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const userName = getCookie('name');
+    if (userName) {
+        document.getElementById('userName').textContent = userName;
+    } else {
+        document.getElementById('userName').textContent = 'Guest';
+    }
+});
+
+let sessionId = null;
+
+// Start session
+document.getElementById('startButton').addEventListener('click', () => {
+    const userId = getCookie('id');
+    if (!userId) {
+        console.error('User ID is missing');
+        return;
+    }
+
+    fetch('session_handler.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'startSession', userId })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            console.error('Error:', data.error);
+        } else {
+            sessionId = data.sessionId;
+            setCookie('sessionId', sessionId, 1);
+            console.log('Session started:', sessionId);
+        }
+    })
+    .catch(error => {
+        console.error('Fetch error:', error);
+    });
+});
+
+// Update generations
+function updateGenerations(newGenerations) {
+    if (sessionId) {
+        fetch('session_handler.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action: 'updateGenerations', sessionId, newGenerations })
+        }).then(() => {
+            console.log('Generations updated:', newGenerations);
+        });
+    }
+}
+
+// End session
+document.getElementById('stopButton').addEventListener('click', () => {
+    if (sessionId) {
+        fetch('session_handler.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action: 'endSession', sessionId })
+        }).then(() => {
+            console.log('Session ended:', sessionId);
+            sessionId = null;
+        });
+    }
+});
