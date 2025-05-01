@@ -38,10 +38,11 @@ if ($user['role'] !== 'admin') {
             }
         }
 
-        function openEditModal(id, name, email) {
+        function openEditModal(id, name, email, role) {
             document.getElementById('editUserId').value = id;
             document.getElementById('editName').value = name;
             document.getElementById('editEmail').value = email;
+            document.getElementById('editRole').value = role;
             document.getElementById('editModal').style.display = 'block';
         }
 
@@ -72,7 +73,7 @@ if ($user['role'] !== 'admin') {
                 echo "<td>" . $row['password'] . "</td>";
                 echo "<td>
                         <button onclick=\"deleteUser(" . $row['id'] . ")\">Delete</button>
-                        <button onclick=\"openEditModal(" . $row['id'] . ", '" . $row['name'] . "', '" . $row['email'] . "')\">Edit</button>
+                        <button onclick=\"openEditModal(" . $row['id'] . ", '" . $row['name'] . "', '" . $row['email'] . "', '" . $row['role'] . "')\">Edit</button>
                       </td>";
                 echo "</tr>";
             }
@@ -109,6 +110,12 @@ if ($user['role'] !== 'admin') {
             <input type="text" name="name" id="editName" required>
             <label for="editEmail">Email:</label>
             <input type="email" name="email" id="editEmail" required>
+            <label for="editRole">Role:</label>
+            <select name="role" id="editRole" required>
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+            </select>
+            <br /> <br />
             <button type="submit">Save</button>
             <button type="button" onclick="closeEditModal()">Cancel</button>
         </form>

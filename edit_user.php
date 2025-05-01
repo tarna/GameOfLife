@@ -8,8 +8,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = intval($_POST['id']);
     $name = $conn->real_escape_string($_POST['name']);
     $email = $conn->real_escape_string($_POST['email']);
+    $role = $conn->real_escape_string($_POST['role']);
 
-    $sql = "UPDATE USERS SET name='$name', email='$email' WHERE id=$id";
+    $sql = "UPDATE USERS SET name='$name', email='$email', role='$role' WHERE id=$id";
 
     if ($conn->query($sql) === TRUE) {
         echo "User updated successfully.";
