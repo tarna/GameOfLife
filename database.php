@@ -35,11 +35,7 @@ function createUsersTable() {
         role ENUM('admin', 'user') DEFAULT 'user'
     )";
 
-    if ($conn->query($sql) === TRUE) {
-        echo "Table USERS created successfully\n";
-    } else {
-        echo "Error creating table: " . $conn->error . "\n";
-    }
+    $conn->query($sql);
 }
 
 function createSessionsTable() {
@@ -53,11 +49,7 @@ function createSessionsTable() {
         FOREIGN KEY (user_id) REFERENCES USERS(id) ON DELETE CASCADE
     )";
 
-    if ($conn->query($sql) === TRUE) {
-        echo "Table SESSIONS created successfully\n";
-    } else {
-        echo "Error creating table: " . $conn->error . "\n";
-    }
+    $conn->query($sql);
 }
 
 function getUser() {
