@@ -35,13 +35,13 @@
         <button id="restartButton">Restart</button>
 
         <br><br>
-        <label for="canvasWidth">Canvas Width:</label>
+        <label for="canvasWidth">Grid Width:</label>
         <input type="number" id="canvasWidth" value="60" min="1">
 
-        <label for="canvasHeight">Canvas Height:</label>
+        <label for="canvasHeight">Grid Height:</label>
         <input type="number" id="canvasHeight" value="40" min="1">
 
-        <button id="resizeCanvasButton">Resize Canvas</button>
+        <button id="resizeCanvasButton">Resize Grid</button>
 
         <?php
             require 'database.php';
