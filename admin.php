@@ -53,7 +53,7 @@ if ($user['role'] !== 'admin') {
 </head>
 <body>
     <h1>Admin Dashboard</h1>
-
+    <button onclick="location.href='admin_analytics.php'">View Game Analytics</button>
     <h2>Users</h2>
     <table>
         <tr>
