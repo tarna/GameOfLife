@@ -99,3 +99,40 @@ function endSession($sessionId) {
     $stmt->execute();
     $stmt->close();
 }
+
+function getTotalSessions() {
+    global $conn;
+    $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM SESSIONS");
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    return (int)$row['total'];
+}
+
+function getAverageGenerations() {
+    global $conn;
+    $stmt = $conn->prepare("SELECT AVG(generations) AS average FROM SESSIONS");
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    return (float)$row['average'];
+}
+
+function getTopUsers($limit = 5) {
+    global $conn;
+    $sql = "SELECT u.name, u.email, SUM(s.generations) AS total_generations
+            FROM USERS u
+            JOIN SESSIONS s ON u.id = s.user_id
+            GROUP BY u.id
+            ORDER BY total_generations DESC
+            LIMIT ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $limit);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $topUsers = [];
+    while ($row = $result->fetch_assoc()) {
+        $topUsers[] = $row;
+    }
+    return $topUsers;
+}
