@@ -1,30 +1,37 @@
 <?php
+// Connect to the database
 require_once "database.php";
 
-// Fetch analytics data
+// Initialize variables
 $totalSessions = 0;
 $averageGenerations = 0;
 $topUsers = [];
 
 try {
     // Total sessions
-    $stmt = $conn->query("SELECT COUNT(*) AS total FROM sessions");
-    $totalSessions = $stmt->fetch()['total'];
+    $stmt1 = $conn->prepare("SELECT COUNT(*) AS total FROM SESSIONS");
+    $stmt1->execute();
+    $result1 = $stmt1->fetch(PDO::FETCH_ASSOC);
+    $totalSessions = $result1 ? $result1['total'] : 0;
 
     // Average generations
-    $stmt = $conn->query("SELECT AVG(generations) AS average FROM sessions");
-    $averageGenerations = round($stmt->fetch()['average'], 2);
+    $stmt2 = $conn->prepare("SELECT AVG(generations) AS average FROM SESSIONS");
+    $stmt2->execute();
+    $result2 = $stmt2->fetch(PDO::FETCH_ASSOC);
+    $averageGenerations = $result2 ? round($result2['average'], 2) : 0;
 
-    // Top 5 users by generations
-    $stmt = $conn->query("
+    // Top 5 users by total generations
+    $stmt3 = $conn->prepare("
         SELECT u.name, u.email, SUM(s.generations) AS total_generations
-        FROM sessions s
+        FROM SESSIONS s
         JOIN users u ON s.user_id = u.id
-        GROUP BY u.id
+        GROUP BY u.id, u.name, u.email
         ORDER BY total_generations DESC
         LIMIT 5
     ");
-    $topUsers = $stmt->fetchAll();
+    $stmt3->execute();
+    $topUsers = $stmt3->fetchAll(PDO::FETCH_ASSOC);
+
 } catch (PDOException $e) {
     die("Database error: " . $e->getMessage());
 }
@@ -46,8 +53,8 @@ try {
             <th>Average Generations per Session</th>
         </tr>
         <tr>
-            <td><?= $totalSessions ?></td>
-            <td><?= $averageGenerations ?></td>
+            <td><?= htmlspecialchars($totalSessions) ?></td>
+            <td><?= htmlspecialchars($averageGenerations) ?></td>
         </tr>
     </table>
 
@@ -62,7 +69,7 @@ try {
             <tr>
                 <td><?= htmlspecialchars($user['name']) ?></td>
                 <td><?= htmlspecialchars($user['email']) ?></td>
-                <td><?= $user['total_generations'] ?></td>
+                <td><?= htmlspecialchars($user['total_generations']) ?></td>
             </tr>
         <?php endforeach; ?>
     </table>
