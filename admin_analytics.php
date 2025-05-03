@@ -3,6 +3,12 @@ require_once "database.php";
 
 $conn = connectToDatabase();
 
+$user = getUser();
+if ($user['role'] !== 'admin') {
+    echo "You do not have permission to access this page.";
+    exit;
+}
+
 $totalSessions = getTotalSessions();
 $averageGenerations = getAverageGenerations();
 $topUsers = getTopUsers(5);
