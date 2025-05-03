@@ -12,7 +12,7 @@ $topUsers = getTopUsers(5);
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Game Analytics Dashboard</title>
+    <title>Conway's Game of Life</title>
     <link rel="stylesheet" href="admin.css">
 </head>
 <body>
